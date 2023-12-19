@@ -1,0 +1,9 @@
+const response = await fetch("http://localhost:2000/api/notes/addNotes", {
+    method: "POST", // *GET, POST, PUT, DELETE, etc.
+    headers: {
+      "Content-Type": "application/json",
+      "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjU2YTNiNmU1NzhhZGY5OWQ4MzU1MWRhIn0sImlhdCI6MTcwMjkwMDI0MH0.b-_-i8xUoWbaujdnDjai_wreV1plMCgqhk4llysBF_I"
+    },
+    body: JSON.stringify(data), // body data type must match "Content-Type" header
+  });
+  const data= response.json();

@@ -1,12 +1,28 @@
-import React, { useContext } from "react";
+import React, { useContext,useState } from "react";
 import NoteContext from "../context/notes/NoteContext";
 
 const NoteItem = (props) => {
   const { note } = props;
   const contextValue = useContext(NoteContext);
   const { deleteNote, updateNote } = contextValue;
-  const handleDelete = () => {
-    deleteNote(note._id);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const handleDelete = async (id) => {
+    if (isDeleting) {
+      // Ignore multiple clicks
+      return;
+    }
+    try {
+      // Set the deletion flag to true
+      setIsDeleting(true);
+  
+      // Perform the deletion operation
+      await deleteNote(id);
+    } catch (error) {
+      console.error("Error deleting note:", error);
+    } finally {
+      // Reset the deletion flag to false
+      setIsDeleting(false);
+    }
   };
   const handleUpdate = () => {
     updateNote(note._id);
@@ -21,7 +37,7 @@ const NoteItem = (props) => {
               <div className="d-flex">
                 <i
                   className="fa-solid fa-trash mx-2"
-                  onClick={handleDelete}
+                  onClick={() => !isDeleting && handleDelete(note._id)}
                 ></i>
                 <i
                   className="fa-solid fa-pen-to-square"
