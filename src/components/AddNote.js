@@ -4,11 +4,15 @@ import NoteContext from "../context/notes/NoteContext";
 const AddNote = () => {
   const contextValue = useContext(NoteContext);
   const { addNote } = contextValue;
-  const [note, setNote] = useState({ title: "", description: "", tag: "default" });
+  const [note, setNote] = useState({
+    title: "",
+    description: "",
+    tag: "default",
+  });
 
   const handleAddNote = (e) => {
     e.preventDefault();
-    addNote(note.title,note.description,note.tag);
+    addNote(note.title, note.description, note.tag);
   };
 
   const onChange = (e) => {
@@ -49,7 +53,7 @@ const AddNote = () => {
         </div>
 
         <button
-          type="button"  
+          type="button"
           className="btn btn-outline-primary"
           onClick={handleAddNote}
         >

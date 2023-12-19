@@ -93,12 +93,15 @@ const NoteState = (props) => {
     setNotes(notes.concat(newNote));
   }
   //update Note
-  const updateNote =()=>{
-
+  const updateNote =(id)=>{
+    console.log("updating"+id);
   }
   //Delete Note
-  const deleteNote = ()=>{
-
+  const deleteNote = (id)=>{
+        //TODO api call
+    const newNotes = notes.filter((notes)=>{return notes._id!==id});
+    setNotes(newNotes);
+    console.log("deleting"+id);
   }
   return (
     // Providing state and set function through NoteContext.Provider
