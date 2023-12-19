@@ -5,24 +5,24 @@ export const Home = () => {
     <div className="container my-3">
       <h1>Add Note</h1>
       <form>
-        <div class="mb-3">
-          <label for="exampleInputEmail1" class="form-label">
+        <div className="mb-3">
+          <label htmlFor="exampleInputEmail1" className="form-label">
             Title
           </label>
           <input
-            class="form-control"
+            className="form-control"
             id="exampleInputEmail1"
             aria-describedby="emailHelp"
           />
         </div>
-        <div class="mb-3">
-          <label for="exampleInputPassword1" class="form-label">
+        <div className="mb-3">
+          <label htmlFor="exampleInputPassword1" className="form-label">
             Description
           </label>
-          <input class="form-control" id="exampleInputPassword1" />
+          <input className="form-control" id="exampleInputPassword1" />
         </div>
 
-        <button type="submit" class="btn btn-outline-primary">
+        <button type="submit" className="btn btn-outline-primary">
           Add
         </button>
       </form>
