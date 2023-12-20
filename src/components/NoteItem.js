@@ -1,7 +1,9 @@
-import React, { useContext,useState } from "react";
+import React, { useContext, useState } from "react";
 import NoteContext from "../context/notes/NoteContext";
+import UpdateModal from "./UpdateModal";
 
 const NoteItem = (props) => {
+  const [isModalVisible, setModalVisible] = useState(false);
   const { note } = props;
   const contextValue = useContext(NoteContext);
   const { deleteNote, updateNote } = contextValue;
@@ -14,7 +16,7 @@ const NoteItem = (props) => {
     try {
       // Set the deletion flag to true
       setIsDeleting(true);
-  
+
       // Perform the deletion operation
       await deleteNote(id);
     } catch (error) {
@@ -24,8 +26,10 @@ const NoteItem = (props) => {
       setIsDeleting(false);
     }
   };
-  const handleUpdate = () => {
-    updateNote(note._id);
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    console.log("click");
+    setModalVisible(true);
   };
   return (
     <>
@@ -49,6 +53,7 @@ const NoteItem = (props) => {
           </div>
         </div>
       </div>
+      <UpdateModal toggle={isModalVisible} id={note._id} />
     </>
   );
 };

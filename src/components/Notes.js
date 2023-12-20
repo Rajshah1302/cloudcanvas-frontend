@@ -2,6 +2,7 @@ import React, { useContext,useEffect } from "react";
 import NoteContext from "../context/notes/NoteContext";
 import NoteItem from "./NoteItem";
 import AddNote from "./AddNote";
+import UpdateModal from "./UpdateModal";
 
 const Notes = () => {
   const contextValue = useContext(NoteContext);
@@ -10,7 +11,8 @@ const Notes = () => {
     getNote();
   },[])
   return (
-    <>
+     
+  <>
     <AddNote />
       <h2>Your Notes</h2>
       <div className="row">

@@ -54,22 +54,40 @@ const NoteState = (props) => {
   };
 
   // Update Note
-  const updateNote = (id, updatedTitle, updatedDescription, updatedTag) => {
-    // TODO: Perform API call to update the note
-    for (let i = 0; i < notes.length; i++) {
-      if (notes[i]._id === id) {
-        // Update the note properties
-        notes[i].title = updatedTitle;
-        notes[i].description = updatedDescription;
-        notes[i].tag = updatedTag;
-
-        // Break the loop since the note is found and updated
-        break;
-      }
+  const updateNote = async (id, updatedTitle, updatedDescription, updatedTag) => {
+    try {
+      // Perform API call to update the note
+      const response = await fetch(URL + "/updateNotes/" + id, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": "your-auth-token", // Replace with your actual auth token
+        },
+        body: JSON.stringify({ updatedTitle, updatedDescription, updatedTag }),
+      });
+  
+      // Assuming the API call is successful
+      const updatedNotes = notes.map((note) => {
+        if (note._id === id) {
+          // Update the specific note
+          return {
+            ...note,
+            title: updatedTitle,
+            description: updatedDescription,
+            tag: updatedTag,
+          };
+        }
+        return note; // Return unchanged notes
+      });
+  
+      // Update the state with the modified notes array
+      setNotes(updatedNotes);
+    } catch (error) {
+      console.error("An error occurred while updating the note:", error);
+      // Handle network or other errors
     }
-    // TODO: Update the state with the modified notes array
-    setNotes(notes);
   };
+  
 
   //Delete Note
   const deleteNote = async (id) => {

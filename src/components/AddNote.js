@@ -7,12 +7,13 @@ const AddNote = () => {
   const [note, setNote] = useState({
     title: "",
     description: "",
-    tag: "default",
+    tag: "",
   });
 
-  const handleAddNote = (e) => {
+  const handleAddNote = async(e) => {
     e.preventDefault();
-    addNote(note.title, note.description, note.tag);
+    await addNote(note.title, note.description, note.tag);
+    setNote({title:"",description:"",tag:""});
   };
 
   const onChange = (e) => {
@@ -47,6 +48,20 @@ const AddNote = () => {
             id="description"
             name="description"
             value={note.description}
+            onChange={onChange}
+            aria-describedby="descriptionHelp"
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="description" className="form-label">
+            Tag
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            id="tag"
+            name="tag"
+            value={note.tag}
             onChange={onChange}
             aria-describedby="descriptionHelp"
           />
