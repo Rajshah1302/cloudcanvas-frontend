@@ -6,7 +6,7 @@ const NoteItem = (props) => {
   const [isModalVisible, setModalVisible] = useState(false);
   const { note } = props;
   const contextValue = useContext(NoteContext);
-  const { deleteNote, updateNote } = contextValue;
+  const { deleteNote } = contextValue;
   const [isDeleting, setIsDeleting] = useState(false);
   const handleDelete = async (id) => {
     if (isDeleting) {
@@ -26,10 +26,12 @@ const NoteItem = (props) => {
       setIsDeleting(false);
     }
   };
-  const handleUpdate = async (e) => {
+  const handleUpdate =(e) => {
     e.preventDefault();
-    console.log("click");
     setModalVisible(true);
+  };
+  const handleModalClose = () => {
+    setModalVisible(false);
   };
   return (
     <>
@@ -53,7 +55,7 @@ const NoteItem = (props) => {
           </div>
         </div>
       </div>
-      <UpdateModal toggle={isModalVisible} id={note._id} />
+      <UpdateModal toggle={isModalVisible} id={note._id} onClose={handleModalClose} />
     </>
   );
 };
