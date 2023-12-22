@@ -10,10 +10,10 @@ const AddNote = () => {
     tag: "",
   });
 
-  const handleAddNote = async(e) => {
+  const handleAddNote = async (e) => {
     e.preventDefault();
     await addNote(note.title, note.description, note.tag);
-    setNote({title:"",description:"",tag:""});
+    setNote({ title: "", description: "", tag: "" });
   };
 
   const onChange = (e) => {
@@ -23,7 +23,7 @@ const AddNote = () => {
   return (
     <>
       <h1>Add Note</h1>
-      <form>
+      <form onSubmit={handleAddNote}>
         <div className="mb-3">
           <label htmlFor="title" className="form-label">
             Title
@@ -35,6 +35,8 @@ const AddNote = () => {
             name="title"
             value={note.title}
             onChange={onChange}
+            minLength={3}
+            required
             aria-describedby="titleHelp"
           />
         </div>
@@ -49,6 +51,8 @@ const AddNote = () => {
             name="description"
             value={note.description}
             onChange={onChange}
+            minLength={5}
+            required
             aria-describedby="descriptionHelp"
           />
         </div>
@@ -67,11 +71,7 @@ const AddNote = () => {
           />
         </div>
 
-        <button
-          type="button"
-          className="btn btn-outline-primary"
-          onClick={handleAddNote}
-        >
+        <button type="submit" className="btn btn-outline-primary">
           Add
         </button>
       </form>
