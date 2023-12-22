@@ -53,42 +53,46 @@ const NoteState = (props) => {
     }
   };
 
-  // Update Note
-  const updateNote = async (id, updatedTitle, updatedDescription, updatedTag) => {
+  const updateNote = async (id, title, description, tag) => {
     try {
       // Perform API call to update the note
-      const response = await fetch(URL + "/updateNotes/" + id, {
+      const response = await fetch(URL + "/updateNote/" + id, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          "auth-token": "your-auth-token", // Replace with your actual auth token
+          "auth-token":
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjU2YTNiNmU1NzhhZGY5OWQ4MzU1MWRhIn0sImlhdCI6MTcwMjkwMDI0MH0.b-_-i8xUoWbaujdnDjai_wreV1plMCgqhk4llysBF_I", // Replace with your actual auth token
         },
-        body: JSON.stringify({ updatedTitle, updatedDescription, updatedTag }),
+        body: JSON.stringify({ title, description, tag }),
       });
+      let updatedNotes; // Declare the variable here
+      console.log(response.status)
+      if (response.ok) {
+        updatedNotes = notes.map((note) => {
+          if (note._id === id) {
+            // Update the specific note
+            return {
+              ...note,
+              title: title,
+              description: description,
+              tag: tag,
+            };
+          }
+          return note; // Return unchanged notes
+        });
   
-      // Assuming the API call is successful
-      const updatedNotes = notes.map((note) => {
-        if (note._id === id) {
-          // Update the specific note
-          return {
-            ...note,
-            title: updatedTitle,
-            description: updatedDescription,
-            tag: updatedTag,
-          };
-        }
-        return note; // Return unchanged notes
-      });
+        // Update the state with the modified notes array
+        setNotes(updatedNotes);
+      } else {
+        console.error(`Failed to update note. Status: ${response.status}`);
+        // Handle specific error cases if needed
+      }
   
-      // Update the state with the modified notes array
-      setNotes(updatedNotes);
     } catch (error) {
       console.error("An error occurred while updating the note:", error);
       // Handle network or other errors
     }
   };
-  
-
   //Delete Note
   const deleteNote = async (id) => {
     //API call
@@ -102,7 +106,6 @@ const NoteState = (props) => {
         },
       });
 
-console.log("Response status:", response.status);
 
       if (response.ok) {
         const newNotes = notes.filter((notes) => {
