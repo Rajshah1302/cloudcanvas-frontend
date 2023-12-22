@@ -4,7 +4,7 @@ import NoteContext from "../context/notes/NoteContext";
 
 function UpdateModal(props) {
   const [show, setShow] = useState(false);
-  const { toggle = false,id } = props;
+  const { toggle,id } = props;
 
   const contextValue = useContext(NoteContext);
   const { updateNote } = contextValue;
@@ -15,9 +15,8 @@ function UpdateModal(props) {
   });
 
   useEffect(() => {
-    console.log(toggle);
     setShow(toggle);
-  }, [toggle]);
+  }, [toggle,id]);
 
   const handleAddNote = async (e) => {
     e.preventDefault();
@@ -30,7 +29,10 @@ function UpdateModal(props) {
     setNote({ ...note, [e.target.name]: e.target.value });
   };
 
-  const handleClose = () => setShow(false);
+  const handleClose = () =>{
+     setShow(false);
+     props.onClose();
+  }
 
   return (
     <>
@@ -42,7 +44,7 @@ function UpdateModal(props) {
           <form>
             <div className="mb-3">
               <label htmlFor="title" className="form-label">
-                Title
+                Title 
               </label>
               <input
                 type="text"
