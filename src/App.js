@@ -7,12 +7,12 @@ import Home from "./components/Home";
 import NoteState from "./context/notes/NoteState";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
-
 function App() {
   return (
     <>
       {/* Wrap the entire application with NoteState to provide context */}
       <NoteState>
+        
         {/* Set up the router for navigation */}
         <Router>
           <Navbar />
