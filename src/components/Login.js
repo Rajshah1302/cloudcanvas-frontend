@@ -1,11 +1,11 @@
 import React, { useRef } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-
+import { useNavigate } from "react-router-dom";
 const Login = () => {
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
-
+  const nav = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -21,9 +21,11 @@ const Login = () => {
         },
         body: JSON.stringify(formData),
       });
-
+      const json = await response.json();
       if (response.ok) {
         console.log("Login successful");
+        localStorage.setItem('token',json.token);
+        nav("/");
       } else {
         console.error("Login failed");
       }
