@@ -1,25 +1,23 @@
-import React, { useContext,useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import NoteContext from "../context/notes/NoteContext";
 import NoteItem from "./NoteItem";
 import AddNote from "./AddNote";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Notes = () => {
   const contextValue = useContext(NoteContext);
-  const { notes,getNote } = contextValue;
+  const { notes, getNote } = contextValue;
   const nav = useNavigate();
-  useEffect(()=>{
-    if(localStorage.getItem('token')!==null){
+  useEffect(() => {
+    if (localStorage.getItem("token") !== null) {
       getNote();
-    }
-    else{
+    } else {
       nav("/login");
     }
-  },[])
+  });
   return (
-     
-  <>
-    <AddNote />
+    <>
+      <AddNote />
       <h2>Your Notes</h2>
       <div className="row">
         {notes.map((note) => {

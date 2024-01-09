@@ -14,7 +14,8 @@ const NoteState = (props) => {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          "auth-token":localStorage.getItem('token')        },
+          "auth-token":localStorage.getItem("token"),
+        },
       });
       const allNotes = await response.json();
       setNotes(allNotes);
@@ -31,7 +32,8 @@ const NoteState = (props) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "auth-token":localStorage.getItem('token')        },
+          "auth-token": localStorage.getItem("token"),
+        },
         body: JSON.stringify({ title, description, tag }),
       });
 
@@ -56,13 +58,12 @@ const NoteState = (props) => {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          "auth-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjU2YTNiNmU1NzhhZGY5OWQ4MzU1MWRhIn0sImlhdCI6MTcwMjkwMDI0MH0.b-_-i8xUoWbaujdnDjai_wreV1plMCgqhk4llysBF_I", // Replace with your actual auth token
+          "auth-token": localStorage.getItem("token"),
         },
         body: JSON.stringify({ title, description, tag }),
       });
       let updatedNotes; // Declare the variable here
-      console.log(response.status)
+      console.log(response.status);
       if (response.ok) {
         updatedNotes = notes.map((note) => {
           if (note._id === id) {
@@ -76,14 +77,13 @@ const NoteState = (props) => {
           }
           return note; // Return unchanged notes
         });
-  
+
         // Update the state with the modified notes array
         setNotes(updatedNotes);
       } else {
         console.error(`Failed to update note. Status: ${response.status}`);
         // Handle specific error cases if needed
       }
-  
     } catch (error) {
       console.error("An error occurred while updating the note:", error);
       // Handle network or other errors
@@ -97,9 +97,9 @@ const NoteState = (props) => {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
-          "auth-token":localStorage.getItem('token')        },
+          "auth-token": localStorage.getItem("token"),
+        },
       });
-
 
       if (response.ok) {
         const newNotes = notes.filter((notes) => {

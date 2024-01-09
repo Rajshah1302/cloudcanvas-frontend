@@ -1,9 +1,13 @@
-import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import React from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 export const Navbar = () => {
   const location = useLocation();
-
+  const nav = useNavigate();
+  const handleLogout = (e) => {
+    localStorage.removeItem("token");
+    nav("/login");
+  };
   return (
     <>
       <nav className="navbar navbar-dark bg-dark navbar-expand-lg ">
@@ -26,37 +30,62 @@ export const Navbar = () => {
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
                 {/* Apply 'active' class based on the current location */}
-                <Link
-                  className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}
-                  aria-current="page"
-                  to="/"
-                >
-                  Home
-                </Link>
+                {localStorage.getItem("token") ? (
+                  <Link
+                    className={`nav-link ${
+                      location.pathname === "/" ? "active" : ""
+                    }`}
+                    aria-current="page"
+                    to="/"
+                  >
+                    Home
+                  </Link>
+                ) : (
+                  <span className="nav-link disabled" aria-current="page">
+                    Home
+                  </span>
+                )}
               </li>
               <li className="nav-item">
                 {/* Apply 'active' class based on the current location */}
                 <Link
-                  className={`nav-link ${location.pathname === '/about' ? 'active' : ''}`}
+                  className={`nav-link ${
+                    location.pathname === "/about" ? "active" : ""
+                  }`}
                   to="/about"
                 >
                   About
                 </Link>
               </li>
-              
-              
             </ul>
-            {/* <form className="d-flex" role="search">
-              <input
-                className="form-control me-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-              <button className="btn btn-outline-success" type="submit">
-                Search
+            {!localStorage.getItem("token") ? (
+              <div className="ms-auto">
+                <Link
+                  className={`btn btn-outline-light me-2 ${
+                    location.pathname === "/login" ? "d-none" : ""
+                  }`}
+                  to="/login"
+                >
+                  Login
+                </Link>
+
+                <Link
+                  className={`btn btn-outline-light ${
+                    location.pathname === "/signup" ? "d-none" : ""
+                  }`}
+                  to="/signup"
+                >
+                  Signup
+                </Link>
+              </div>
+            ) : (
+              <button
+                className="btn btn-outline-light me-2"
+                onClick={handleLogout}
+              >
+                Logout
               </button>
-            </form> */}
+            )}
           </div>
         </div>
       </nav>
